@@ -1,0 +1,4 @@
+name: SkyeStatus
+version: @version@
+main: net.skyemc.skyestatus.SkyeStatus
+description: Notifies chat when servers go online
