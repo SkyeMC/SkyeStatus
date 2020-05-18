@@ -1,0 +1,13 @@
+# The interval in which the server status of connected servers is checked. Value in seconds
+ping_interval: 5
+
+# Servers which not to ping
+server_blacklist:
+  - example
+
+# Servers that will get online notifications
+servers_to_notify:
+  - lobby
+
+# Hovertext
+hover_text: Click to join the server
