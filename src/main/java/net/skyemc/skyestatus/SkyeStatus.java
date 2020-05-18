@@ -69,10 +69,13 @@ public final class SkyeStatus extends Plugin {
     }
 
     public void notifyServers(SkyeServer server){
+        String joinMsg = config.getString("online_message"); // Loading configured online_message
+        joinMsg = joinMsg.replace("%s", server.name); // replacing %s placeholder with server name
+        joinMsg = joinMsg.replace("&", "§"); // replacing "&" with "§" since bungee wants it like this. sigh
+
         String hoverText = config.getString("hover_text"); // Loading configured hover text
         TextComponent message = new TextComponent();
-            message.setText("Server " + server.name + " is back online!");
-            message.setColor(ChatColor.GREEN);
+            message.setText(joinMsg);
             message.setHoverEvent(new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hoverText).create()));
             message.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/server " + server.name));
 

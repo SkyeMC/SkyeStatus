@@ -11,3 +11,8 @@ servers_to_notify:
 
 # Hovertext
 hover_text: Click to join the server
+
+# Server back online message. %s will be replaced by the servername
+# You can use color codes as seen here:
+# https://media.discordapp.net/attachments/536426242766012426/577538720954318879/Color_codes.png
+online_message: "[>>] %s is now online. [Click to Connect]"
