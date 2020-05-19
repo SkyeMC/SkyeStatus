@@ -14,6 +14,7 @@ import net.md_5.bungee.config.YamlConfiguration;
 import net.skyemc.skyestatus.commands.SkyeStatusReload;
 
 import java.io.*;
+import java.util.Collection;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -40,12 +41,17 @@ public final class SkyeStatus extends Plugin {
     }
 
     public void pingStarter(){
+
+        Configuration friendlyNameSection = config.getSection("friendly_names"); // Loading the friendly names section of the config
+
         Map<String, ServerInfo> servers = getProxy().getServers(); // Populating list of Servers
         serverArray = new SkyeServer[servers.size()]; // Creating array with fixed size
 
         int i = 0;
         for (Map.Entry<String, ServerInfo> entry : servers.entrySet()){
             SkyeServer tempServer = new SkyeServer(entry, this);
+            tempServer.friendlyName = friendlyNameSection.getString(tempServer.name, null); // Setting the friendly name of the server if defined in config
+            logger.info("Server " + tempServer.name + " is now named: " + tempServer.tryFriendlyName());
 
             if(config.getList("server_blacklist").contains(entry.getKey())){ // Checking if server is blacklisted
                 tempServer.getsPinged = false;
@@ -70,7 +76,7 @@ public final class SkyeStatus extends Plugin {
 
     public void notifyServers(SkyeServer server){
         String joinMsg = config.getString("online_message"); // Loading configured online_message
-        joinMsg = joinMsg.replace("%s", server.name); // replacing %s placeholder with server name
+        joinMsg = joinMsg.replace("%s", server.tryFriendlyName()); // replacing %s placeholder with server name
         joinMsg = joinMsg.replace("&", "§"); // replacing "&" with "§" since bungee wants it like this. sigh
 
         String hoverText = config.getString("hover_text"); // Loading configured hover text

@@ -1,10 +1,8 @@
 package net.skyemc.skyestatus;
 
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.config.ServerInfo;
-import net.md_5.bungee.protocol.packet.Chat;
 
 import java.util.Map;
 import java.util.Timer;
@@ -14,6 +12,7 @@ public class SkyeServer {
     String name; // Server name
     ServerInfo info; // Server info (duh)
     SkyeStatus plugin; // Plugin object
+    String friendlyName; // Friendly server name, may be null
 
     public boolean getsPinged = true;
     public boolean getsNotified = false;
@@ -37,10 +36,10 @@ public class SkyeServer {
             return;
         }
         if(val){ // when server went online
-            plugin.getLogger().info("Server " + this.name + " is back online");
+            plugin.getLogger().info("Server " + this.name + "(" + this.tryFriendlyName() + ") is back online");
             plugin.notifyServers(this);
         } else { // when server went offline
-          plugin.getLogger().warning("Server " + this.name + " has gone offline");
+          plugin.getLogger().warning("Server " + this.name + "(" + this.tryFriendlyName() + ") has gone offline");
         }
         this.isOnline = val; // Updating the online value
     }
@@ -49,6 +48,10 @@ public class SkyeServer {
         info.getPlayers().forEach(proxiedPlayer -> { // Looping through all players on this server
             proxiedPlayer.sendMessage(ChatMessageType.CHAT, msg);
         });
+    }
+
+    public String tryFriendlyName(){
+        return friendlyName == null ? name : friendlyName;
     }
 
     public void stopPinging(){
