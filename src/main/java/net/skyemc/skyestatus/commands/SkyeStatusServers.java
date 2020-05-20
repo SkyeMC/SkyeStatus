@@ -24,41 +24,25 @@ public class SkyeStatusServers extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        Map<String, String> messages = fillMessageMap();
         TextComponent answer = new TextComponent();
-        StringBuilder headerMsgBuilder = new StringBuilder();
+        Configuration config = plugin.getConfig();
 
+        StringBuilder headerMsgBuilder = new StringBuilder();
         headerMsgBuilder.
-                append(messages.get("servers_spacer") + "&r\n").
-                append(messages.get("servers_title") + "&r\n").
-                append(messages.get("servers_spacer") + "&r\n");
+                append(config.getString("servers_spacer") + "&r\n").
+                append(config.getString("servers_title") + "&r\n").
+                append(config.getString("servers_spacer") + "&r\n");
 
         answer.setText(Utils.formatter(headerMsgBuilder.toString()));
 
         for(SkyeServer server : plugin.getServers()){
             boolean isCurrentServer = false;
-            if(sender instanceof ProxiedPlayer ){
+            if(sender instanceof ProxiedPlayer ){ // Checking if executer is a player
                 isCurrentServer = ((ProxiedPlayer) sender).getServer().getInfo() == server.getInfo();
             }
-            //sender.sendMessage(server.getFancyStatus(isCurrentServer));
-            answer.addExtra(server.getFancyStatus(isCurrentServer));
+            answer.addExtra(server.getFancyStatus(isCurrentServer)); // Adding current server to list
         }
-
         sender.sendMessage(answer);
-
-
-    }
-
-    private Map<String, String> fillMessageMap(){
-        Configuration config = plugin.getConfig();
-        String error = "Error while loading config";
-        Map<String, String> messages = new HashMap<String, String>()
-        {{
-            put("servers_spacer", config.getString("servers_spacer", error));
-            put("servers_title", config.getString("servers_title", error));
-        }};
-
-        return messages;
     }
 
 }

@@ -31,21 +31,13 @@ public class SkyeStatusReload extends Command {
         }
         sender.sendMessage(answer);
 
-        // Stopping ping timers:
-        answer.setText("Stopping ping timers...");
+        // Reloading pingTimers to apply changes to config
+        answer.setText("Reloading plugin...");
         answer.setColor(ChatColor.WHITE);
         sender.sendMessage(answer);
         plugin.pingStopper();
-        answer.setText("Stopped ping timers");
-        answer.setColor(ChatColor.GREEN);
-        sender.sendMessage(answer);
-
-        //Restarting ping timers:
-        answer.setText("Starting ping timers...");
-        answer.setColor(ChatColor.WHITE);
-        sender.sendMessage(answer);
         plugin.pingStarter();
-        answer.setText("Started ping timers");
+        answer.setText("Reloaded plugin!");
         answer.setColor(ChatColor.GREEN);
         sender.sendMessage(answer);
 

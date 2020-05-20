@@ -1,30 +1,27 @@
 # The interval in which the server status of connected servers is checked. Value in seconds
 ping_interval: 5
 
-
 # Servers that will get online notifications (use the names used in bungeecords config.yml)
 servers_to_notify:
   - lobby
-
 
 # Servers which not to ping (use the names used in bungeecords config.yml)
 server_blacklist:
   - example
 
-# Server friendly names that will be shown in the  now online messages
+# Friendly server names that will be shown in the  now online messages
 friendly_names:
   lobby: "HUB"
   testserver: "KuhlServer"
   example: "Whatever"
 
-# Server now online message. %s will be replaced by the friendly servername
+# Server online message. %s will be replaced by the friendly servername
 # You can use color codes as seen here:
 # https://media.discordapp.net/attachments/536426242766012426/577538720954318879/Color_codes.png
 online_message: "[&2>>&r] %s is now &2online&r [&9Click to Connect&r]"
 
 # Hovertext appearing when hovering over the online messages
-hover_text: Click to join the server
-
+hover_text: "Click to join the server"
 
 # /servers message customization:
 # Color codes work
@@ -38,4 +35,4 @@ servers_nameformat: "[%s]"
 #/servers "Click to join" message
 servers_click_join: "Click to join!"
 #/servers "You are here" message
-servers_here: "You are here"
+servers_here: "&c<&r&kP&r&c>&r&oYou are here"

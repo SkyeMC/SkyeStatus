@@ -72,25 +72,30 @@ public class SkyeServer {
             return Utils.Status.ONLINE;
         }
         return Utils.Status.OFFLINE;
-
     }
 
     public TextComponent getFancyStatus(boolean isCurrent){
         Configuration config = plugin.getConfig();
-        TextComponent message = new TextComponent();
-        StringBuilder msg = new StringBuilder();
+        TextComponent message = new TextComponent(); // Final TextComponent which will be returned in the end
+        StringBuilder msg = new StringBuilder(); // Temporary message to build the final message
 
-        String statusStr = "&4Unknown";
         Utils.Status state = getStatus();
-        if(state == Utils.Status.ONLINE)
-            statusStr = config.getString("servers_status_online", statusStr);
-        if(state == Utils.Status.OFFLINE)
-            statusStr = config.getString("servers_status_offline", statusStr);
-        if(state == Utils.Status.RESTARTING)
-            statusStr = config.getString("servers_status_restarting", statusStr);
-        msg.append(statusStr + "&r");
+        switch (state){
+            case ONLINE:
+                msg.append(config.getString("servers_status_online"));
+                break;
+            case OFFLINE:
+                msg.append(config.getString("servers_status_offline"));
+                break;
+            case RESTARTING:
+                msg.append(config.getString("servers_status_restarting"));
+                break;
+            default:
+                msg.append("&4Unknown");
+        }
+        msg.append("&r"); // resetting formatting
 
-        msg.append(" - " + config.getString("servers_nameformat").replace("%s", tryFriendlyName()) + "&r");
+        msg.append(" - " + config.getString("servers_nameformat").replace("%s", tryFriendlyName()) + "&r"); // Inserting the server name
 
         if(state == Utils.Status.ONLINE && !isCurrent){
             msg.append(" - " + config.getString("servers_click_join"));
@@ -103,6 +108,5 @@ public class SkyeServer {
 
         message.setText(Utils.formatter(msg.toString()));
         return message;
-
     }
 }
