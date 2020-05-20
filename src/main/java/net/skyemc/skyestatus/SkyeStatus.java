@@ -31,7 +31,7 @@ public final class SkyeStatus extends Plugin {
             logger.severe("Plugin will not be loaded!");
             return;
         }
-        getProxy().getPluginManager().registerCommand(this, new SkyeStatusReload("skyestatus_reload", this, "ssr")); // TODO: Figure out this permission fucky wucky
+        getProxy().getPluginManager().registerCommand(this, new SkyeStatusReload("skyestatus_reload", this, "ssr"));
         pingStarter();
     }
 
