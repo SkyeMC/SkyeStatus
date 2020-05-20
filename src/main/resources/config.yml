@@ -9,15 +9,14 @@ servers_to_notify:
 server_blacklist:
   - example
 
-# Friendly server names that will be shown in the  now online messages
+# Friendly server names that will be shown in the  now online messages (supports color codes)
 friendly_names:
   lobby: "HUB"
   testserver: "KuhlServer"
   example: "Whatever"
 
 # Server online message. %s will be replaced by the friendly servername
-# You can use color codes as seen here:
-# https://media.discordapp.net/attachments/536426242766012426/577538720954318879/Color_codes.png
+# You can use color codes
 online_message: "[&2>>&r] %s is now &2online&r [&9Click to Connect&r]"
 
 # Hovertext appearing when hovering over the online messages
@@ -30,9 +29,16 @@ servers_title:  "&3                Server Status"
 servers_status_online: "&2Online"
 servers_status_offline: "&cOffline"
 servers_status_restarting: "&eRestarting"
-#Server name formatting: (%s will be replaced by the friendly servername)
-servers_nameformat: "[%s]"
 #/servers "Click to join" message
-servers_click_join: "Click to join!"
+servers_click_join: "- Click to join!"
 #/servers "You are here" message
-servers_here: "&c<&r&kP&r&c>&r&oYou are here"
+servers_here: "- &c<&r&kP&r&c>&r&oYou are here"
+
+#/servers server entry format:
+# Color codes work
+#Placeholders:
+# %server%: friendly server name as configured in 'friendly_names'
+# %status%: Online status (Online/Offline/Restarting) as configured in 'servers_status_*'
+# %join_here%: if executing player is on this server, 'servers_here' will be inserted, if not and the server is online 'servers_click_join' will be inserted
+# %rawname%: unfriendly server name
+servers_entry_format: "%status% - [%server%] %join_here%"

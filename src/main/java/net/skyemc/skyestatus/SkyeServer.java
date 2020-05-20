@@ -76,37 +76,39 @@ public class SkyeServer {
 
     public TextComponent getFancyStatus(boolean isCurrent){
         Configuration config = plugin.getConfig();
-        TextComponent message = new TextComponent(); // Final TextComponent which will be returned in the end
-        StringBuilder msg = new StringBuilder(); // Temporary message to build the final message
+        TextComponent message = new TextComponent(); // Final TextComponent which will be returned in the end#
 
         Utils.Status state = getStatus();
+        String serverStatus;
         switch (state){
             case ONLINE:
-                msg.append(config.getString("servers_status_online"));
+                serverStatus = config.getString("servers_status_online");
                 break;
             case OFFLINE:
-                msg.append(config.getString("servers_status_offline"));
+                serverStatus = config.getString("servers_status_offline");
                 break;
             case RESTARTING:
-                msg.append(config.getString("servers_status_restarting"));
+                serverStatus = config.getString("servers_status_restarting");
                 break;
             default:
-                msg.append("&4Unknown");
+                serverStatus = "&4Unknown";
         }
-        msg.append("&r"); // resetting formatting
 
-        msg.append(" - " + config.getString("servers_nameformat").replace("%s", tryFriendlyName()) + "&r"); // Inserting the server name
-
+        String join_here = isCurrent ? config.getString("servers_here") : ""; // Adding "You are here" message in case its true
         if(state == Utils.Status.ONLINE && !isCurrent){
-            msg.append(" - " + config.getString("servers_click_join"));
-            message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/server " + this.name));
-            message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(config.getString("hover_text")).create()));
+            join_here = config.getString("servers_click_join"); // Setting this to the click to join message
+            message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/server " + this.name)); // Adding click event to join server
+            message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(config.getString("hover_text")).create())); // Adding hover event for text
         }
 
-        msg.append(isCurrent ? " - " + config.getString("servers_here") : ""); // Adding "You are here" message in case its true
-        msg.append("\n"); // Adding newline
+        String finalMessage = config.getString("servers_entry_format", "Config error"); // Fetching the message format
+        finalMessage = finalMessage.replace("%server%", this.tryFriendlyName() + "&r"); // Replacing %server% placeholder
+        finalMessage = finalMessage.replace("%status%", serverStatus + "&r"); // Replacing %status% placeholder
+        finalMessage = finalMessage.replace("%join_here%", join_here + "&r"); // Replacing %join_here% placeholder
+        finalMessage = finalMessage.replace("%rawname%", this.name + "&r"); // Replacing %rawname% placeholder
+        finalMessage = finalMessage + "\n"; // Adding newline
 
-        message.setText(Utils.formatter(msg.toString()));
+        message.setText(Utils.formatter(finalMessage));
         return message;
     }
 }
