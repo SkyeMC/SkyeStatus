@@ -22,16 +22,15 @@ public class PingHandler extends TimerTask {
 
     private void pingCallback(ServerPing result, Throwable error) {
         if(result == null){ // Result is null when server is unreachable
-            //this.server.isOnline = false;
             this.server.statusChange(false);
             return;
         }
         if(result.getPlayers() == null) { // Result is null when server is still starting
-            //this.server.isOnline = false;
             this.server.statusChange(false);
+            this.server.isRestarting = true;
             return;
         }
-        //this.server.isOnline = true;
+        this.server.isRestarting = false;
         this.server.statusChange(true);
     }
 }

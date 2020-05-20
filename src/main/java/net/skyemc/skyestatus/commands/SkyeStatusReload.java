@@ -11,7 +11,7 @@ public class SkyeStatusReload extends Command {
     private SkyeStatus plugin;
 
     public SkyeStatusReload(String name, SkyeStatus plugin, String... aliases) {
-        super(name, "skyemc.skyestatus.reload", aliases);
+        super(name, "skyemc.skyestatus.command.reload", aliases);
         this.plugin = plugin;
     }
 

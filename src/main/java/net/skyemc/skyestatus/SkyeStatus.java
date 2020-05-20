@@ -12,6 +12,8 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import net.skyemc.skyestatus.commands.SkyeStatusReload;
+import net.skyemc.skyestatus.commands.SkyeStatusServers;
+import net.skyemc.skyestatus.utils.Utils;
 
 import java.io.*;
 import java.util.Collection;
@@ -32,6 +34,7 @@ public final class SkyeStatus extends Plugin {
             return;
         }
         getProxy().getPluginManager().registerCommand(this, new SkyeStatusReload("skyestatus_reload", this, "ssr"));
+        getProxy().getPluginManager().registerCommand(this, new SkyeStatusServers("skyestatus_servers", this, "servers"));
         pingStarter();
     }
 
@@ -77,7 +80,7 @@ public final class SkyeStatus extends Plugin {
     public void notifyServers(SkyeServer server){
         String joinMsg = config.getString("online_message"); // Loading configured online_message
         joinMsg = joinMsg.replace("%s", server.tryFriendlyName()); // replacing %s placeholder with server name
-        joinMsg = joinMsg.replace("&", "§"); // replacing "&" with "§" since bungee wants it like this. sigh
+        joinMsg = Utils.formatter(joinMsg); // making the colors work
 
         String hoverText = config.getString("hover_text"); // Loading configured hover text
         TextComponent message = new TextComponent();
@@ -119,5 +122,13 @@ public final class SkyeStatus extends Plugin {
             return false;
         }
         return true;
+    }
+
+    public Configuration getConfig(){
+        return config;
+    }
+
+    public SkyeServer[] getServers(){
+        return serverArray;
     }
 }

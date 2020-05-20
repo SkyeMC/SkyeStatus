@@ -20,7 +20,22 @@ friendly_names:
 # Server now online message. %s will be replaced by the friendly servername
 # You can use color codes as seen here:
 # https://media.discordapp.net/attachments/536426242766012426/577538720954318879/Color_codes.png
-online_message: "[>>] %s is now online. [Click to Connect]"
+online_message: "[&2>>&r] %s is now &2online&r [&9Click to Connect&r]"
 
 # Hovertext appearing when hovering over the online messages
 hover_text: Click to join the server
+
+
+# /servers message customization:
+# Color codes work
+servers_spacer: "&9============================================="
+servers_title:  "&3                Server Status"
+servers_status_online: "&2Online"
+servers_status_offline: "&cOffline"
+servers_status_restarting: "&eRestarting"
+#Server name formatting: (%s will be replaced by the friendly servername)
+servers_nameformat: "[%s]"
+#/servers "Click to join" message
+servers_click_join: "Click to join!"
+#/servers "You are here" message
+servers_here: "You are here"
